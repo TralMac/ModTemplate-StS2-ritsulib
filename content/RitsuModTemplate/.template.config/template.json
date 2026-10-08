@@ -1,0 +1,144 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "STS2 RitsuLib Templates",
+    "name": "Empty Slay the Spire 2 Mod (RitsuLib)",
+    "description": "An empty Slay the Spire 2 mod with RitsuLib as a dependency.",
+    "identity": "RitsuLib.Sts2Mod",
+    "shortName": "ritsusts2mod",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "RitsuMod",
+    "sources": [
+        {
+            "modifiers":[
+                {
+                    "condition": true,
+                    "exclude":[
+                        ".git/**",
+                        ".godot/**",
+                        ".idea/**",
+                        "Properties/**"
+                    ]
+                }
+            ]
+        }
+    ],
+    "forms": {
+        "ritsuStemNonAlphaNumeric": { "identifier": "replace", "pattern": "[^A-Za-z0-9]+", "replacement": "_" },
+        "ritsuStemAcronymBoundary": { "identifier": "replace", "pattern": "([A-Z]+)([A-Z][a-z])", "replacement": "$1_$2" },
+        "ritsuStemCamelBoundary": { "identifier": "replace", "pattern": "([a-z0-9])([A-Z])", "replacement": "$1_$2" },
+        "ritsuStemCollapseUnderscores": { "identifier": "replace", "pattern": "_+", "replacement": "_" },
+        "ritsuStemTrimUnderscores": { "identifier": "replace", "pattern": "^_|_$", "replacement": "" },
+        "ritsuStemUpperCase": { "identifier": "upperCase" },
+        "ritsuEntryStem": {
+            "identifier": "chain",
+            "steps": [
+                "ritsuStemNonAlphaNumeric",
+                "ritsuStemAcronymBoundary",
+                "ritsuStemCamelBoundary",
+                "ritsuStemCollapseUnderscores",
+                "ritsuStemTrimUnderscores",
+                "ritsuStemUpperCase"
+            ]
+        }
+    },
+    "symbols": {
+        "ModAuthor":{
+            "type": "parameter",
+            "dataType": "string",
+            "isRequired": "true",
+            "replaces": "{ModAuthor}",
+            "defaultValue": "Author"
+        },
+        "GameApi":{
+            "type": "parameter",
+            "dataType": "choice",
+            "description": "The Slay the Spire 2 API branch the mod is compiled against. Selects STS2.RitsuLib or the matching STS2.RitsuLib.Compat.<version> package.",
+            "choices": [
+                {
+                    "choice": "latest",
+                    "description": "Highest API supported by RitsuLib (usually the game's beta branch). Uses the STS2.RitsuLib package."
+                },
+                {
+                    "choice": "0.110",
+                    "description": "Game API 0.110.x. Uses STS2.RitsuLib.Compat.0.110.0."
+                },
+                {
+                    "choice": "0.109",
+                    "description": "Game API 0.109.x. Uses STS2.RitsuLib.Compat.0.109.0."
+                },
+                {
+                    "choice": "0.107",
+                    "description": "Game API 0.107.x. Uses STS2.RitsuLib.Compat.0.107.1."
+                }
+            ],
+            "defaultValue": "latest"
+        },
+        "RitsuLibPackage":{
+            "type": "generated",
+            "generator": "switch",
+            "replaces": "{RitsuLibPackage}",
+            "parameters": {
+                "evaluator": "C++",
+                "datatype": "string",
+                "cases": [
+                    { "condition": "(GameApi == \"0.110\")", "value": "STS2.RitsuLib.Compat.0.110.0" },
+                    { "condition": "(GameApi == \"0.109\")", "value": "STS2.RitsuLib.Compat.0.109.0" },
+                    { "condition": "(GameApi == \"0.107\")", "value": "STS2.RitsuLib.Compat.0.107.1" },
+                    { "condition": "", "value": "STS2.RitsuLib" }
+                ]
+            }
+        },
+        "MinGameVersion":{
+            "type": "generated",
+            "generator": "switch",
+            "replaces": "{MinGameVersion}",
+            "parameters": {
+                "evaluator": "C++",
+                "datatype": "string",
+                "cases": [
+                    { "condition": "(GameApi == \"0.110\")", "value": "0.110.0" },
+                    { "condition": "(GameApi == \"0.109\")", "value": "0.109.0" },
+                    { "condition": "(GameApi == \"0.107\")", "value": "0.107.1" },
+                    { "condition": "", "value": "0.111.0" }
+                ]
+            }
+        },
+        "LegacyAttackApi":{
+            "type": "computed",
+            "value": "(GameApi == \"0.107\")"
+        },
+        "ModEntryStem":{
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "ritsuEntryStem",
+            "replaces": "RITSU_MOD",
+            "description": "RitsuLib public entry stem of the mod id (e.g. MyMod -> MY_MOD), used in localization keys."
+        },
+        "PublicizeSts":{
+            "type": "parameter",
+            "dataType":"bool",
+            "defaultValue": "false",
+            "replaces": "{PublicizeSts}",
+            "description": "If enabled, non-virtual private and protected symbols in the Slay the Spire 2 .dll will be publicized."
+        },
+        "NullableChecks":{
+            "type": "parameter",
+            "dataType":"choice",
+            "choices": [
+                {
+                    "choice": "enable",
+                    "description": "More strict handling of possibly null values."
+                },
+                {
+                    "choice": "disable",
+                    "description": ""
+                }
+            ],
+            "replaces": "{NullableChecks}",
+            "defaultValue": "enable"
+        }
+    }
+}

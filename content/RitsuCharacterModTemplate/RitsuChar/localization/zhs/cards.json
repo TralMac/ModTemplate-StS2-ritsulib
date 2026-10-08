@@ -1,0 +1,10 @@
+{
+  "RITSU_CHAR_CARD_STRIKE_RITSU_CHAR.title": "打击",
+  "RITSU_CHAR_CARD_STRIKE_RITSU_CHAR.description": "造成{Damage:diff()}点伤害。",
+
+  "RITSU_CHAR_CARD_DEFEND_RITSU_CHAR.title": "防御",
+  "RITSU_CHAR_CARD_DEFEND_RITSU_CHAR.description": "获得{Block:diff()}点[gold]格挡[/gold]。",
+
+  "RITSU_CHAR_CARD_EXAMPLE_POWER_CARD.title": "示例能力牌",
+  "RITSU_CHAR_CARD_EXAMPLE_POWER_CARD.description": "每当你抽一张牌时，获得{ExamplePower:diff()}点[gold]格挡[/gold]。"
+}

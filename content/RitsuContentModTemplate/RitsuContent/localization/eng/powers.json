@@ -1,0 +1,5 @@
+{
+  "RITSU_CONTENT_POWER_EXAMPLE_POWER.title": "Example Power",
+  "RITSU_CONTENT_POWER_EXAMPLE_POWER.description": "Whenever you draw a card, gain [gold]Block[/gold].",
+  "RITSU_CONTENT_POWER_EXAMPLE_POWER.smartDescription": "Whenever you draw a card, gain [blue]{Amount}[/blue] [gold]Block[/gold]."
+}

@@ -1,0 +1,10 @@
+{
+  "RITSU_CHAR_CARD_STRIKE_RITSU_CHAR.title": "Strike",
+  "RITSU_CHAR_CARD_STRIKE_RITSU_CHAR.description": "Deal {Damage:diff()} damage.",
+
+  "RITSU_CHAR_CARD_DEFEND_RITSU_CHAR.title": "Defend",
+  "RITSU_CHAR_CARD_DEFEND_RITSU_CHAR.description": "Gain {Block:diff()} [gold]Block[/gold].",
+
+  "RITSU_CHAR_CARD_EXAMPLE_POWER_CARD.title": "Example Power Card",
+  "RITSU_CHAR_CARD_EXAMPLE_POWER_CARD.description": "Whenever you draw a card, gain {ExamplePower:diff()} [gold]Block[/gold]."
+}
