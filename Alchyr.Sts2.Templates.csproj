@@ -4,7 +4,7 @@
     <PackageVersion>2.5.2</PackageVersion>
     <Title>Sts2 Mod Templates</Title>
     <Authors>Alchyr</Authors>
-    <Description>Templates to use when creating a Slay the Spire 2 mod</Description>
+    <Description>Templates to use when creating a Slay the Spire 2 mod with BaseLib or RitsuLib</Description>
     <PackageTags>dotnet-new;templates;</PackageTags>
     <PackageProjectUrl>https://github.com/Alchyr/ModTemplate-StS2/</PackageProjectUrl>
     <PackageReleaseNotes>Change PatchAll to pass assembly directly instead of relying on harmony getting assembly through stack trace</PackageReleaseNotes>

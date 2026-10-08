@@ -1,0 +1,5 @@
+{
+  "RITSU_CONTENT_POWER_EXAMPLE_POWER.title": "示例能力",
+  "RITSU_CONTENT_POWER_EXAMPLE_POWER.description": "每当你抽一张牌时，获得[gold]格挡[/gold]。",
+  "RITSU_CONTENT_POWER_EXAMPLE_POWER.smartDescription": "每当你抽一张牌时，获得[blue]{Amount}[/blue]点[gold]格挡[/gold]。"
+}

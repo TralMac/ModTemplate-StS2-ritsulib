@@ -1,0 +1,17 @@
+{
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.title": "RitsuChar",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.titleObject": "RitsuChar",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.description": "一位新的挑战者踏上了尖塔。\n在这里描述你的角色。",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.pronounSubject": "ta",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.pronounObject": "ta",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.pronounPossessive": "ta的",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.possessiveAdjective": "ta的",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.cardsModifierTitle": "RitsuChar卡牌",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.cardsModifierDescription": "RitsuChar的卡牌现在会出现在奖励和商店中。",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.aromaPrinciple": "[sine][blue]……继续前进……[/blue][/sine]",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.goldMonologue": "[sine]这些金币……也许能派上用场……[/sine]",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.eventDeathPrevention": "还不是时候……",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.banter.alive.endTurnPing": "该你了！",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.banter.dead.endTurnPing": "……"
+}

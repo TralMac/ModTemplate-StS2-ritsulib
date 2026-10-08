@@ -1,0 +1,7 @@
+{
+  "RITSU_CONTENT_CARD_EXAMPLE_ATTACK.title": "Example Attack",
+  "RITSU_CONTENT_CARD_EXAMPLE_ATTACK.description": "Deal {Damage:diff()} damage.",
+
+  "RITSU_CONTENT_CARD_EXAMPLE_POWER_CARD.title": "Example Power Card",
+  "RITSU_CONTENT_CARD_EXAMPLE_POWER_CARD.description": "Whenever you draw a card, gain {ExamplePower:diff()} [gold]Block[/gold]."
+}

@@ -1,0 +1,17 @@
+{
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.title": "RitsuChar",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.titleObject": "RitsuChar",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.description": "A new challenger climbs the Spire.\nDescribe your character here.",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.pronounSubject": "they",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.pronounObject": "them",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.pronounPossessive": "theirs",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.possessiveAdjective": "their",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.cardsModifierTitle": "RitsuChar Cards",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.cardsModifierDescription": "RitsuChar cards will now appear in rewards and shops.",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.unlockText": "Play a run as [pink]{Prerequisite}[/pink] to unlock this character.",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.aromaPrinciple": "[sine][blue]...onward...[/blue][/sine]",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.goldMonologue": "[sine]This could come in handy...[/sine]",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.eventDeathPrevention": "Not yet...",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.banter.alive.endTurnPing": "Your turn!",
+  "RITSU_CHAR_CHARACTER_RITSU_CHAR_CHARACTER.banter.dead.endTurnPing": "..."
+}
