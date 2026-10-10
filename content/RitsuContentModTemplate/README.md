@@ -72,6 +72,8 @@ Entry 会写进存档，发布后不要再改类名；确实要改名时用 `[Re
 | 遗物 | `RitsuContent/images/relics/<类名>.png`、`<类名>_outline.png`、`big/<类名>.png` |
 | 能力 | `RitsuContent/images/powers/<类名>.png`、`big/<类名>.png` |
 
+新加卡牌后可以运行 `python tools/card_placeholders.py`（需要 `pip install pillow`）批量生成占位卡图：按卡牌类型配色的大色块加卡名（默认取 `zhs` 本地化，`--lang eng` 用英文名）。只生成还没有图片的卡，`--force` 会覆盖全部。
+
 ### 游戏版本
 
 csproj 引用的 `STS2.RitsuLib` 跟随 RitsuLib 支持的最高游戏 API（通常是测试版）。

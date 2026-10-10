@@ -80,6 +80,8 @@ Entry 会写进存档，发布后不要再改类名；确实要改名时用 `[Re
 | 药水 | `RitsuChar/images/potions/<类名>.png`、`outline/<类名>.png` |
 | 角色 UI | `RitsuChar/images/charui/` |
 
+新加卡牌后可以运行 `python tools/card_placeholders.py`（需要 `pip install pillow`）批量生成占位卡图：按卡牌类型配色的大色块加卡名（默认取 `zhs` 本地化，`--lang eng` 用英文名）。只生成还没有图片的卡，`--force` 会覆盖全部。
+
 角色的战斗模型、能量表盘、商店/篝火场景等暂时借用铁甲战士（`PlaceholderCharacterId`），在 `RitsuCharCharacter.AssetProfile` 里换成自己的资源。
 
 ### 游戏版本
