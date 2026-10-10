@@ -17,6 +17,14 @@
         <RegistrySts2Path>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 2868840', 'InstallLocation', '', RegistryView.Registry64, RegistryView.Registry32))</RegistrySts2Path>
         <AutoSteamPath>$(registry:HKEY_CURRENT_USER\Software\Valve\Steam@SteamPath)\steamapps</AutoSteamPath>
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == '' and Exists('$(AutoSteamPath)/common/Slay the Spire 2')">$(AutoSteamPath)</SteamLibraryPath>
+
+        <!-- Otherwise look up the Steam library that contains app 2868840 in libraryfolders.vdf (game installed on another drive) -->
+        <SteamLibraryFoldersVdf>$(AutoSteamPath)/libraryfolders.vdf</SteamLibraryFoldersVdf>
+        <SteamLibraryFoldersText Condition="'$(SteamLibraryPath)' == '' and Exists('$(SteamLibraryFoldersVdf)')">$([System.IO.File]::ReadAllText('$(SteamLibraryFoldersVdf)'))</SteamLibraryFoldersText>
+        <SteamLibraryVdfPattern>"path"\s+"([^"]+)"[^{}]*"apps"\s*\{[^}]*"2868840"</SteamLibraryVdfPattern>
+        <VdfSteamLibraryPath Condition="'$(SteamLibraryFoldersText)' != '' and $([System.Text.RegularExpressions.Regex]::IsMatch($(SteamLibraryFoldersText), $(SteamLibraryVdfPattern)))">$([System.Text.RegularExpressions.Regex]::Match($(SteamLibraryFoldersText), $(SteamLibraryVdfPattern)).Result('$1').Replace('\\', '/'))/steamapps</VdfSteamLibraryPath>
+        <SteamLibraryPath Condition="'$(SteamLibraryPath)' == '' and '$(VdfSteamLibraryPath)' != '' and Exists('$(VdfSteamLibraryPath)/common/Slay the Spire 2')">$(VdfSteamLibraryPath)</SteamLibraryPath>
+
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">C:/Program Files (x86)/Steam/steamapps</SteamLibraryPath>
 
         <Sts2Path Condition="'$(Sts2Path)' == '' and Exists('$(SteamLibraryPath)/common/Slay the Spire 2')">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
