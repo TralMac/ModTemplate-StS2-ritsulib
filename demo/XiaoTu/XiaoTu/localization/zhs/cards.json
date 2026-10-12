@@ -96,5 +96,9 @@
   "XIAO_TU_CARD_METEOR_DICE.title": "流星锤骰子",
   "XIAO_TU_CARD_METEOR_DICE.description": "造成{Damage:diff()}点伤害，获得1枚临时骰子，并对敌人赋予等同于其点数的易伤。",
   "XIAO_TU_CARD_STONE_DICE.title": "石头骰子",
-  "XIAO_TU_CARD_STONE_DICE.description": "获得{Block:diff()}点[gold]格挡[/gold]，获得1枚临时骰子。"
+  "XIAO_TU_CARD_STONE_DICE.description": "获得{Block:diff()}点[gold]格挡[/gold]，获得1枚临时骰子。",
+  "XIAO_TU_CARD_SINGLE_BENEFIT.title": "单数福利",
+  "XIAO_TU_CARD_SINGLE_BENEFIT.description": "你的回合结束时，每有1枚奇数骰子，获得{Amount:diff()}点[gold]格挡[/gold]。",
+  "XIAO_TU_CARD_CHOSEN_ONE.title": "天选之人",
+  "XIAO_TU_CARD_CHOSEN_ONE.description": "每回合开始时，你点数最低的那枚骰子会被再重投一次。"
 }

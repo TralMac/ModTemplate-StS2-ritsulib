@@ -29,6 +29,9 @@ public sealed class DiceState
 
     public static DiceState Of(Player player) => States.GetValue(player, _ => new DiceState());
 
+    public string Describe() =>
+        $"[{string.Join(",", _dice.Select(d => d.Value + (d.Temporary ? "t" : "")))}] total={Total} pledged={PledgedCount}";
+
     public static int Roll() => Rng.Next(1, 7);
 
     public void Clear()
@@ -131,6 +134,14 @@ public sealed class DiceState
         if (_dice.Count == 0) return;
         var lo = _dice.Select((d, i) => (d, i)).MinBy(x => x.d.Value).i;
         _dice[lo] = _dice[lo] with { Value = _dice.Max(d => d.Value) };
+    }
+
+    /// <summary>Rerolls the lowest die once.</summary>
+    public void RerollLowest()
+    {
+        if (_dice.Count == 0) return;
+        var i = _dice.Select((d, k) => (d, k)).MinBy(x => x.d.Value).k;
+        _dice[i] = _dice[i] with { Value = Roll() };
     }
 
     /// <summary>Mirrors every die: 1↔6, 2↔5, 3↔4.</summary>

@@ -96,5 +96,9 @@
   "XIAO_TU_CARD_METEOR_DICE.title": "Meteor Die",
   "XIAO_TU_CARD_METEOR_DICE.description": "Deal {Damage:diff()} damage. Gain 1 temporary die and apply Vulnerable equal to its value.",
   "XIAO_TU_CARD_STONE_DICE.title": "Stone Die",
-  "XIAO_TU_CARD_STONE_DICE.description": "Gain {Block:diff()} [gold]Block[/gold]. Gain 1 temporary die."
+  "XIAO_TU_CARD_STONE_DICE.description": "Gain {Block:diff()} [gold]Block[/gold]. Gain 1 temporary die.",
+  "XIAO_TU_CARD_SINGLE_BENEFIT.title": "Odd Perks",
+  "XIAO_TU_CARD_SINGLE_BENEFIT.description": "At the end of your turn, gain {Amount:diff()} [gold]Block[/gold] for each odd die.",
+  "XIAO_TU_CARD_CHOSEN_ONE.title": "Chosen One",
+  "XIAO_TU_CARD_CHOSEN_ONE.description": "At the start of each turn, your lowest die is rerolled once more."
 }

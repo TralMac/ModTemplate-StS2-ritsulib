@@ -1,1 +1,8 @@
-{}
+{
+  "XIAO_TU_POWER_SINGLE_BENEFIT_POWER.title": "Odd Perks",
+  "XIAO_TU_POWER_SINGLE_BENEFIT_POWER.description": "At end of turn, gain {Amount} Block per odd die.",
+  "XIAO_TU_POWER_SINGLE_BENEFIT_POWER.smartDescription": "At end of turn, gain {Amount} Block per odd die.",
+  "XIAO_TU_POWER_CHOSEN_ONE_POWER.title": "Chosen One",
+  "XIAO_TU_POWER_CHOSEN_ONE_POWER.description": "At turn start, reroll your lowest die {Amount} more time(s).",
+  "XIAO_TU_POWER_CHOSEN_ONE_POWER.smartDescription": "At turn start, reroll your lowest die {Amount} more time(s)."
+}

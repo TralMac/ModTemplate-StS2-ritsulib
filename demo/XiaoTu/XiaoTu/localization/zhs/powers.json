@@ -1,1 +1,8 @@
-{}
+{
+  "XIAO_TU_POWER_SINGLE_BENEFIT_POWER.title": "单数福利",
+  "XIAO_TU_POWER_SINGLE_BENEFIT_POWER.description": "回合结束时，每有1枚奇数骰子，获得{Amount}点格挡。",
+  "XIAO_TU_POWER_SINGLE_BENEFIT_POWER.smartDescription": "回合结束时，每有1枚奇数骰子，获得{Amount}点格挡。",
+  "XIAO_TU_POWER_CHOSEN_ONE_POWER.title": "天选之人",
+  "XIAO_TU_POWER_CHOSEN_ONE_POWER.description": "每回合开始时，点数最低的骰子再重投{Amount}次。",
+  "XIAO_TU_POWER_CHOSEN_ONE_POWER.smartDescription": "每回合开始时，点数最低的骰子再重投{Amount}次。"
+}
