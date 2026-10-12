@@ -38,18 +38,29 @@ public sealed class DiceState
     }
 
     /// <summary>Adds a die with a random value. Over the cap, a random temp die is replaced, else a random die.</summary>
-    public void Add(bool temporary)
+    public int Add(bool temporary)
     {
         var die = new Die(Roll(), temporary);
         if (_dice.Count < MaxDice)
         {
             _dice.Add(die);
-            return;
+            return die.Value;
         }
 
         var temps = _dice.Select((d, i) => (d, i)).Where(x => x.d.Temporary).Select(x => x.i).ToList();
         var index = temps.Count > 0 ? temps[Rng.Next(temps.Count)] : Rng.Next(_dice.Count);
         _dice[index] = die;
+        return die.Value;
+    }
+
+    /// <summary>Rerolls the lowest die; success when the new value is strictly greater.</summary>
+    public bool BetHighLowest()
+    {
+        if (_dice.Count == 0) return false;
+        var i = _dice.Select((d, k) => (d, k)).MinBy(x => x.d.Value).k;
+        var old = _dice[i].Value;
+        _dice[i] = _dice[i] with { Value = Roll() };
+        return _dice[i].Value > old;
     }
 
     /// <summary>Rerolls one die (random) and returns its new value; 0 when there are no dice.</summary>
@@ -103,6 +114,23 @@ public sealed class DiceState
         if (_dice.Count == 0) return;
         var i = Rng.Next(_dice.Count);
         _dice[i] = _dice[i] with { Value = Math.Clamp(_dice[i].Value + delta, 1, 6) };
+    }
+
+    /// <summary>Rerolls one random die whose value is not 6 (666).</summary>
+    public void RerollRandomNot6()
+    {
+        var idx = _dice.Select((d, i) => (d, i)).Where(x => x.d.Value != 6).Select(x => x.i).ToList();
+        if (idx.Count == 0) return;
+        var i = idx[Rng.Next(idx.Count)];
+        _dice[i] = _dice[i] with { Value = Roll() };
+    }
+
+    /// <summary>The lowest die becomes equal to the highest (跟风).</summary>
+    public void MatchLowestToHighest()
+    {
+        if (_dice.Count == 0) return;
+        var lo = _dice.Select((d, i) => (d, i)).MinBy(x => x.d.Value).i;
+        _dice[lo] = _dice[lo] with { Value = _dice.Max(d => d.Value) };
     }
 
     /// <summary>Mirrors every die: 1↔6, 2↔5, 3↔4.</summary>
