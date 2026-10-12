@@ -1,0 +1,18 @@
+{
+  "XIAO_TU_CARD_STRIKE_XIAO_TU.title": "打击",
+  "XIAO_TU_CARD_STRIKE_XIAO_TU.description": "造成{Damage:diff()}点伤害。",
+  "XIAO_TU_CARD_DEFEND_XIAO_TU.title": "防御",
+  "XIAO_TU_CARD_DEFEND_XIAO_TU.description": "获得{Block:diff()}点[gold]格挡[/gold]。",
+  "XIAO_TU_CARD_RUSTY_DICE.title": "锈蚀骰子",
+  "XIAO_TU_CARD_RUSTY_DICE.description": "获得1枚骰子。",
+  "XIAO_TU_CARD_LUCKY_STRIKE.title": "好运打击",
+  "XIAO_TU_CARD_LUCKY_STRIKE.description": "重投随机1枚骰子，造成{Damage:diff()}加上该骰子点数的伤害。",
+  "XIAO_TU_CARD_LUCKY_DEFEND.title": "好运防御",
+  "XIAO_TU_CARD_LUCKY_DEFEND.description": "重投随机1枚骰子，获得{Block:diff()}加上该骰子点数的[gold]格挡[/gold]。",
+  "XIAO_TU_CARD_DICE_BARRAGE.title": "骰子弹幕",
+  "XIAO_TU_CARD_DICE_BARRAGE.description": "对所有敌人造成{Damage:diff()}加上总骰点的伤害。",
+  "XIAO_TU_CARD_PLASTIC_DICE.title": "塑料骰子",
+  "XIAO_TU_CARD_PLASTIC_DICE.description": "获得2枚临时骰子，然后重投所有骰子。",
+  "XIAO_TU_CARD_LEAD_DICE.title": "灌铅骰子",
+  "XIAO_TU_CARD_LEAD_DICE.description": "造成{Damage:diff()}点伤害，获得1枚临时骰子。"
+}

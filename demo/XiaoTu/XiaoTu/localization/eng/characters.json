@@ -1,0 +1,17 @@
+{
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.title": "XiaoTu",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.titleObject": "XiaoTu",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.description": "A new challenger climbs the Spire.\nDescribe your character here.",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.pronounSubject": "they",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.pronounObject": "them",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.pronounPossessive": "theirs",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.possessiveAdjective": "their",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.cardsModifierTitle": "XiaoTu Cards",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.cardsModifierDescription": "XiaoTu cards will now appear in rewards and shops.",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.unlockText": "Play a run as [pink]{Prerequisite}[/pink] to unlock this character.",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.aromaPrinciple": "[sine][blue]...onward...[/blue][/sine]",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.goldMonologue": "[sine]This could come in handy...[/sine]",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.eventDeathPrevention": "Not yet...",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.banter.alive.endTurnPing": "Your turn!",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.banter.dead.endTurnPing": "..."
+}
