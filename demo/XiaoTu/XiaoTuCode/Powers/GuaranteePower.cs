@@ -21,13 +21,14 @@ public sealed class GuaranteePower : XiaoTuPower
 
     public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
-        if (dealer != Owner || Owner.Player == null || !props.IsPoweredAttack() || target.IsDead) return;
+        if (dealer != Owner || Owner.Player == null || !props.IsPoweredAttack()) return;
         var dice = DiceState.Of(Owner.Player);
         var floor = dice.Lowest;
         var missing = floor - result.UnblockedDamage;
-        if (missing <= 0) return;
         Flash();
-        await CreatureCmd.Damage(choiceContext, target, missing, ValueProp.Unblockable | ValueProp.Unpowered, Owner);
+        if (missing > 0 && !target.IsDead)
+            await CreatureCmd.Damage(choiceContext, target, missing, ValueProp.Unblockable | ValueProp.Unpowered, Owner);
+        //Upgraded (Amount 2): every attack also rerolls the lowest die, whether or not the floor was needed.
         if (Amount >= 2) dice.RerollLowest();
         await DiceDispatcher.Dispatch(choiceContext, Owner.Player);
     }

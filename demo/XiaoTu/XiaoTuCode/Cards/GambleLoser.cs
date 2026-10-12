@@ -15,7 +15,7 @@ public sealed class GambleLoser() : XiaoTuCard(1, CardType.Power, CardRarity.Rar
 {
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
-        await PowerCmd.Apply<GambleLoserPower>(ctx, Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<GambleLoserPower>(ctx, Owner.Creature, IsUpgraded ? 2 : 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

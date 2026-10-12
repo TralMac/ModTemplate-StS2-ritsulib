@@ -25,6 +25,14 @@ public sealed class DiceState
 
     public IReadOnlyList<Die> Dice => _dice;
 
+    /// <summary>Remaining turns of each pledged die, soonest first (for the on-screen display).</summary>
+    public IReadOnlyList<int> PledgeTurns => _pledges.Select(p => p.Turns).OrderBy(t => t).ToList();
+
+    /// <summary>Raised after any change to the dice, pledges or slots; the combat HUD redraws on it.</summary>
+    public event Action? Changed;
+
+    private void Touch() => Changed?.Invoke();
+
     /// <summary>Dice slots for this combat (骰子位); 断舍离 / 弱女子 lower it.</summary>
     public int Capacity { get; private set; } = MaxDice;
 
@@ -150,6 +158,7 @@ public sealed class DiceState
         _rerolls = _gains = _goldLost = 0;
         GoldLostThisCombat = RerollsThisTurn = GainOrPledgeCount = 0;
         ExtraCardRewards = ExtraGoldRewards = 0;
+        Touch();
     }
 
     private void ApplyFloor()
@@ -198,6 +207,7 @@ public sealed class DiceState
         var old = _dice[i].Value;
         var v = NextValue(old);
         _dice[i] = _dice[i] with { Value = v };
+        Touch();
         return v > old;
     }
 
@@ -205,6 +215,7 @@ public sealed class DiceState
     {
         if (_dice[i].Fixed) return;
         _dice[i] = _dice[i] with { Value = Math.Clamp(v, Math.Max(1, Floor), 6) };
+        Touch();
     }
 
     /// <summary>Adds a die with a random value. Over the cap, a random temp die is replaced, else a random die.</summary>
@@ -229,6 +240,7 @@ public sealed class DiceState
         if (_dice.Count < Capacity)
         {
             _dice.Add(die);
+            Touch();
             return die.Value;
         }
 
@@ -236,6 +248,7 @@ public sealed class DiceState
         var pool = temps.Count > 0 ? temps : _dice.Select((d, i) => (d, i)).Where(x => !x.d.Fixed).Select(x => x.i).ToList();
         if (pool.Count == 0) return 0;
         _dice[pool[Rng.Next(pool.Count)]] = die;
+        Touch();
         return die.Value;
     }
 
@@ -252,6 +265,7 @@ public sealed class DiceState
             var pool = _dice.Select((d, i) => (d, i)).Where(x => !x.d.Fixed).Select(x => x.i).ToList();
             if (pool.Count > 0) _dice[pool[Rng.Next(pool.Count)]] = die;
         }
+        Touch();
     }
 
     // ---- rerolls ----
@@ -290,6 +304,7 @@ public sealed class DiceState
             if (counts) Reroll(i);
             else if (!_dice[i].Fixed) _dice[i] = _dice[i] with { Value = InitialRoll() };
         }
+        Touch();
     }
 
     /// <summary>Rerolls every die matching the predicate; returns how many were rerolled.</summary>
@@ -360,6 +375,7 @@ public sealed class DiceState
             var idx = temps.Count > 0 ? temps[Rng.Next(temps.Count)] : Rng.Next(_dice.Count);
             _dice.RemoveAt(idx);
         }
+        Touch();
     }
 
     // ---- 质押 (pledge): a die leaves for X turns, comes back (random value) at the start of the Xth turn. ----
@@ -385,6 +401,7 @@ public sealed class DiceState
             _pledgeEvents++;
             if (!die.Temporary) _pledges.Add((turns, duplicate ? die.Value : 0));
         }
+        Touch();
     }
 
     /// <summary>Called at the start of each player turn: counts down and returns due dice (no effect when full).</summary>
@@ -405,6 +422,7 @@ public sealed class DiceState
             returned++;
             if (copy > 0 && _dice.Count < Capacity) _dice.Add(new Die(Math.Max(copy, Floor), false));
         }
+        Touch();
         return returned;
     }
 
@@ -423,6 +441,7 @@ public sealed class DiceState
         TickPledges();
         RerollAll(counts: false);
         GainOrPledgeCount += _dice.Count;
+        Touch();
     }
 }
 

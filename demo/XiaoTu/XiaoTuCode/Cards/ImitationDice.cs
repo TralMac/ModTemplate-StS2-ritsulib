@@ -11,6 +11,9 @@ namespace XiaoTu.XiaoTuCode.Cards;
 
 public sealed class ImitationDice() : XiaoTuCard(0, CardType.Skill, CardRarity.Token, TargetType.Self)
 {
+    //The design gives this card no upgrade, so the game should not offer it for upgrading.
+    public override int MaxUpgradeLevel => 0;
+
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
         Dice.Add(temporary: true);

@@ -21,4 +21,9 @@ public sealed class SellDice() : XiaoTuCard(0, CardType.Skill, CardRarity.Common
         Dice.Pledge(1, 99);
         await PlayerCmd.GainGold(DynamicVars["Gold"].IntValue, Owner);
     }
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars["Gold"].UpgradeValueBy(10m);
+    }
 }

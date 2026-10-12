@@ -14,6 +14,9 @@ public sealed class MoreStake() : XiaoTuCard(1, CardType.Skill, CardRarity.Rare,
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
+    //The design gives this card no upgrade, so the game should not offer it for upgrading.
+    public override int MaxUpgradeLevel => 0;
+
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
         await LoseGold(DynamicVars["Gold"].IntValue);

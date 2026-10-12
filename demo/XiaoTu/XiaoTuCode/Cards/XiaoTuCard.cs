@@ -2,11 +2,14 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.ValueProps;
 using XiaoTu.XiaoTuCode.Character;
 using XiaoTu.XiaoTuCode.Dice;
 using XiaoTu.XiaoTuCode.Extensions;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Content;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace XiaoTu.XiaoTuCode.Cards;
@@ -28,6 +31,27 @@ public abstract class XiaoTuCard(int cost, CardType type, CardRarity rarity, Tar
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"cards/{GetType().Name}.png".ImagePathOr(null)
     );
+
+    /// <summary>Side-panel hover tips for dice vocabulary (骰子, 质押, 押大...) and for token cards this card creates.</summary>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips
+    {
+        get
+        {
+            var tips = new List<IHoverTip>();
+            if (!CardKeywordMap.Map.TryGetValue(GetType().Name, out var entry)) return tips;
+            foreach (var stem in entry.Keywords)
+            {
+                var id = ModContentRegistry.GetQualifiedKeywordId(MainFile.ModId, stem);
+                if (ModKeywordRegistry.TryGet(id, out _)) tips.Add(ModKeywordRegistry.CreateHoverTip(id));
+            }
+            foreach (var token in entry.Tokens)
+            {
+                if (token == nameof(FakeDice)) tips.Add(HoverTipFactory.FromCard<FakeDice>());
+                else if (token == nameof(ImitationDice)) tips.Add(HoverTipFactory.FromCard<ImitationDice>());
+            }
+            return tips;
+        }
+    }
 
     protected DiceState Dice => DiceState.Of(Owner);
 

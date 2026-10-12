@@ -15,7 +15,7 @@ public sealed class Guarantee() : XiaoTuCard(2, CardType.Power, CardRarity.Uncom
 {
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
-        await PowerCmd.Apply<GuaranteePower>(ctx, Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<GuaranteePower>(ctx, Owner.Creature, IsUpgraded ? 2 : 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

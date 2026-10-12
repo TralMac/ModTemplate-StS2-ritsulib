@@ -30,8 +30,11 @@ public sealed class RustyMemorialDice : XiaoTuRelic
 
     public override Task BeforeCombatStart()
     {
+        foreach (var def in STS2RitsuLib.Keywords.ModKeywordRegistry.GetDefinitionsSnapshot().Where(d => d.ModId == MainFile.ModId))
+            MainFile.Logger.Info($"[Keywords] {def.Id} title={def.TitleTable}/{def.TitleKey} desc={def.DescriptionTable}/{def.DescriptionKey} card={def.CardKeywordValue}");
         var dice = DiceState.Of(Owner);
         dice.Clear();
+        DiceHud.Bind(Owner);
         dice.Add(temporary: false, counts: false);
         return Task.CompletedTask;
     }
@@ -42,6 +45,7 @@ public sealed class RustyMemorialDice : XiaoTuRelic
 
         var dice = DiceState.Of(player);
         dice.BeginTurn();
+        DiceHud.Bind(player);
         MainFile.Logger.Info($"[dice] turn start: {dice.Describe()} gold={player.Gold}");
         return DebugGrantCards(choiceContext);
     }
@@ -71,6 +75,20 @@ public sealed class RustyMemorialDice : XiaoTuRelic
     /// </summary>
     private async Task DebugGrantCards(PlayerChoiceContext choiceContext)
     {
+        var auditFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "debug_audit.txt");
+        if (File.Exists(auditFile))
+        {
+            File.Delete(auditFile);
+            var combatState = Owner.Creature.CombatState!;
+            foreach (var canon in ModelDb.AllCards.Where(c => c.GetType().Namespace == "XiaoTu.XiaoTuCode.Cards").OrderBy(c => c.GetType().Name))
+            {
+                var card = combatState.CreateCard(canon, Owner);
+                var up = combatState.CreateCard(canon, Owner);
+                if (up.IsUpgradable) CardCmd.Upgrade(up);
+                MainFile.Logger.Info($"[audit] {canon.GetType().Name}|{card.GetDescriptionForPile(PileType.Hand)}|{up.GetDescriptionForPile(PileType.Hand)}|{up.IsUpgraded}");
+            }
+        }
+
         var file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "debug_cards.txt");
         if (!File.Exists(file)) return;
         var names = File.ReadAllLines(file).Select(l => l.Trim()).Where(l => l.Length > 0).ToList();
@@ -81,9 +99,12 @@ public sealed class RustyMemorialDice : XiaoTuRelic
         await PlayerCmd.GainEnergy(10, Owner);
         foreach (var name in batch)
         {
-            var canon = ModelDb.AllCards.FirstOrDefault(c => c.GetType().Name == name);
+            var upgrade = name.EndsWith("+");
+            var cardName = upgrade ? name[..^1] : name;
+            var canon = ModelDb.AllCards.FirstOrDefault(c => c.GetType().Name == cardName);
             if (canon == null) { MainFile.Logger.Warn($"[debug] unknown card {name}"); continue; }
             var card = combat.CreateCard(canon, Owner);
+            if (upgrade && card.IsUpgradable) CardCmd.Upgrade(card);
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
         }
     }
