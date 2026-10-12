@@ -1,0 +1,18 @@
+{
+  "XIAO_TU_CARD_STRIKE_XIAO_TU.title": "Strike",
+  "XIAO_TU_CARD_STRIKE_XIAO_TU.description": "Deal {Damage:diff()} damage.",
+  "XIAO_TU_CARD_DEFEND_XIAO_TU.title": "Defend",
+  "XIAO_TU_CARD_DEFEND_XIAO_TU.description": "Gain {Block:diff()} [gold]Block[/gold].",
+  "XIAO_TU_CARD_RUSTY_DICE.title": "Rusty Die",
+  "XIAO_TU_CARD_RUSTY_DICE.description": "Gain 1 die.",
+  "XIAO_TU_CARD_LUCKY_STRIKE.title": "Lucky Strike",
+  "XIAO_TU_CARD_LUCKY_STRIKE.description": "Reroll 1 random die. Deal {Damage:diff()} plus that die's value damage.",
+  "XIAO_TU_CARD_LUCKY_DEFEND.title": "Lucky Defend",
+  "XIAO_TU_CARD_LUCKY_DEFEND.description": "Reroll 1 random die. Gain {Block:diff()} plus that die's value [gold]Block[/gold].",
+  "XIAO_TU_CARD_DICE_BARRAGE.title": "Dice Barrage",
+  "XIAO_TU_CARD_DICE_BARRAGE.description": "Deal {Damage:diff()} plus total dice damage to ALL enemies.",
+  "XIAO_TU_CARD_PLASTIC_DICE.title": "Plastic Dice",
+  "XIAO_TU_CARD_PLASTIC_DICE.description": "Gain 2 temporary dice, then reroll all dice.",
+  "XIAO_TU_CARD_LEAD_DICE.title": "Loaded Die",
+  "XIAO_TU_CARD_LEAD_DICE.description": "Deal {Damage:diff()} damage. Gain 1 temporary die."
+}
