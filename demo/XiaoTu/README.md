@@ -16,3 +16,10 @@
 ## 注意
 
 云端环境没有 .NET SDK 和 `sts2.dll`，这份代码**没有编译过**。`RustyMemorialDice.BeforeCombatStart` 等钩子名需要在装有游戏的电脑上 `dotnet build` 确认。骰子使用 `System.Random`，不与游戏种子同步。
+
+## 构建与 PCK
+
+本 mod 的 `XiaoTu.json` 声明了 `has_pck: true`，所以必须生成 `XiaoTu.pck`，否则游戏日志会报 “declares that it should load a PCK” 以及一大堆 `res://XiaoTu/images/...` 加载失败。
+
+1. 在本目录新建（已被 .gitignore）`Directory.Build.props`，写入 `GodotPath`（Godot 4.5.1 mono 的 console.exe 路径）。
+2. 运行 `dotnet publish`，它会编译并用 Godot 导出 pck 到游戏 `mods/XiaoTu/`。

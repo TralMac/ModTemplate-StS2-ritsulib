@@ -1,5 +1,10 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.ValueProps;
 using XiaoTu.XiaoTuCode.Character;
+using XiaoTu.XiaoTuCode.Dice;
 using XiaoTu.XiaoTuCode.Extensions;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -23,4 +28,35 @@ public abstract class XiaoTuCard(int cost, CardType type, CardRarity rarity, Tar
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"cards/{GetType().Name}.png".ImagePathOr(null)
     );
+
+    protected DiceState Dice => DiceState.Of(Owner);
+
+    /// <summary>Whether the card has at least n dice to pledge; used by 质押 cards' IsPlayable.</summary>
+    protected bool HasDice(int n) => Owner != null && DiceState.Of(Owner).Count >= n;
+
+    protected Task Hit(PlayerChoiceContext ctx, CardPlay play, decimal damage, int hits = 1)
+    {
+        var attack = DamageCmd.Attack(damage).FromCard(this, play).WithHitCount(hits);
+        return (TargetType == TargetType.AllEnemies
+            ? attack.TargetingAllOpponents(CombatState!)
+            : TargetType == TargetType.RandomEnemy
+                ? attack.TargetingRandomOpponents(CombatState!)
+                : attack.Targeting(play.Target!)).Execute(ctx);
+    }
+
+    protected Task Block(CardPlay play, decimal amount, int times = 1) => GainBlockAsync(play, amount, times);
+
+    private async Task GainBlockAsync(CardPlay play, decimal amount, int times)
+    {
+        for (var i = 0; i < times; i++)
+            await CreatureCmd.GainBlock(Owner.Creature, amount, ValueProp.Move, play);
+    }
+
+    protected Task Draw(PlayerChoiceContext ctx, int n) => CardPileCmd.Draw(ctx, n, Owner);
+
+    protected Task LoseGold(int n)
+    {
+        GoldOps.Lose(Owner, n);
+        return Task.CompletedTask;
+    }
 }
