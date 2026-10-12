@@ -1,0 +1,16 @@
+{
+  "SEA_GLASS.XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.title": "XiaoTu玻璃",
+  "XIAO_TU_RELIC_RUSTY_MEMORIAL_DICE.title": "生锈的纪念骰子",
+  "XIAO_TU_RELIC_RUSTY_MEMORIAL_DICE.description": "战斗开始时，获得1枚骰子。每回合开始时，重投所有骰子。你的金币可以为负，下限为-1000；金币每低于0一点，你受到的攻击伤害+0.5%。",
+  "XIAO_TU_RELIC_RUSTY_MEMORIAL_DICE.flavor": "葬礼上，有人把它放进了她的手里。上面的锈，是海水的味道。",
+  "XIAO_TU_RELIC_LEGENDARY_DIE.title": "传奇骰子",
+  "XIAO_TU_RELIC_LEGENDARY_DIE.description": "战斗开始时，额外获得1枚骰子（共2枚）。",
+  "XIAO_TU_RELIC_SHOP_DIE.title": "商人的骰子",
+  "XIAO_TU_RELIC_SHOP_DIE.description": "战斗开始时，额外获得1枚骰子。",
+  "XIAO_TU_RELIC_SLOT_MACHINE.title": "老虎机",
+  "XIAO_TU_RELIC_SLOT_MACHINE.description": "每重投7次骰子，抽1张牌。（计数跨战斗保留）",
+  "XIAO_TU_RELIC_MEMBERSHIP_CARD.title": "会员积分卡",
+  "XIAO_TU_RELIC_MEMBERSHIP_CARD.description": "每获得5次骰子，获得1点能量。（计数跨战斗保留）",
+  "XIAO_TU_RELIC_TAINTED_CHURCH_COIN.title": "被污染的教会金币",
+  "XIAO_TU_RELIC_TAINTED_CHURCH_COIN.description": "拾起时，获得500金币，将一张债务加入你的牌组。"
+}

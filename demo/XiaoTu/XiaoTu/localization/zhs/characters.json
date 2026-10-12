@@ -1,0 +1,17 @@
+{
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.title": "小兔",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.titleObject": "小兔",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.description": "活力满满的兔女郎。替挚友把最后一局赌完。\n起始遗物让她可以带着骰子上路。",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.pronounSubject": "ta",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.pronounObject": "ta",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.pronounPossessive": "ta的",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.possessiveAdjective": "ta的",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.cardsModifierTitle": "小兔卡牌",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.cardsModifierDescription": "小兔的卡牌现在会出现在奖励和商店中。",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.aromaPrinciple": "[sine][blue]……继续前进……[/blue][/sine]",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.goldMonologue": "[sine]这些金币……也许能派上用场……[/sine]",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.eventDeathPrevention": "还不是时候……",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.banter.alive.endTurnPing": "该你了！",
+  "XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.banter.dead.endTurnPing": "……"
+}

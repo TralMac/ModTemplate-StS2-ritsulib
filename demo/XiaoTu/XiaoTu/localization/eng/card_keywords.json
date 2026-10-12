@@ -1,0 +1,14 @@
+{
+  "XIAO_TU_KEYWORD_DICE.title": "Dice",
+  "XIAO_TU_KEYWORD_DICE.description": "The dice you hold, each showing 1-6, up to 5 (including temporary dice). Every die is rolled again at the start of each turn.",
+  "XIAO_TU_KEYWORD_TEMP_DICE.title": "Temporary Dice",
+  "XIAO_TU_KEYWORD_TEMP_DICE.description": "Dice that vanish when the enemies' turn ends. They show a random value when gained.",
+  "XIAO_TU_KEYWORD_TOTAL_DICE.title": "Total Dice",
+  "XIAO_TU_KEYWORD_TOTAL_DICE.description": "The sum of the values of all your dice.",
+  "XIAO_TU_KEYWORD_PLEDGE.title": "Pledge",
+  "XIAO_TU_KEYWORD_PLEDGE.description": "Temporarily lose a die for X turns; it returns with a random value at the start of the Xth turn (nothing happens if you are full). Cards that pledge cannot be played without enough dice. A pledged temporary die simply vanishes.",
+  "XIAO_TU_KEYWORD_BET_HIGH.title": "Bet High",
+  "XIAO_TU_KEYWORD_BET_HIGH.description": "Reroll a die. It succeeds if the new value is greater than the old one (a tie fails).",
+  "XIAO_TU_KEYWORD_REROLL.title": "Reroll",
+  "XIAO_TU_KEYWORD_REROLL.description": "Roll a die again, completely at random. The automatic roll at the start of the turn is not a reroll."
+}

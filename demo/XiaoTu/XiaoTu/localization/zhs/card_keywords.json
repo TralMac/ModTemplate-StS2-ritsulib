@@ -1,0 +1,14 @@
+{
+  "XIAO_TU_KEYWORD_DICE.title": "骰子",
+  "XIAO_TU_KEYWORD_DICE.description": "你拥有的骰子，点数为1~6，上限5枚（含临时骰子）。每回合开始时，所有骰子自动重新投掷。",
+  "XIAO_TU_KEYWORD_TEMP_DICE.title": "临时骰子",
+  "XIAO_TU_KEYWORD_TEMP_DICE.description": "在所有敌人的回合结束时消失的骰子。获得时点数随机。",
+  "XIAO_TU_KEYWORD_TOTAL_DICE.title": "总骰点",
+  "XIAO_TU_KEYWORD_TOTAL_DICE.description": "当前所有骰子点数之和。",
+  "XIAO_TU_KEYWORD_PLEDGE.title": "质押",
+  "XIAO_TU_KEYWORD_PLEDGE.description": "暂时失去1枚骰子若干回合，在第X个回合开始时归还（点数随机）。已达骰子上限时归还无效；骰子不足时无法打出需要质押的牌；被质押的临时骰子直接消失。",
+  "XIAO_TU_KEYWORD_BET_HIGH.title": "押大",
+  "XIAO_TU_KEYWORD_BET_HIGH.description": "重投一枚骰子，若重投后的点数大于重投前则成功（相等算失败）。",
+  "XIAO_TU_KEYWORD_REROLL.title": "重投",
+  "XIAO_TU_KEYWORD_REROLL.description": "由卡牌或能力触发，完全随机地重新投掷骰子。回合开始的自动投骰不算重投。"
+}

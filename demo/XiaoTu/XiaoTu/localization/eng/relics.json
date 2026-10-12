@@ -1,0 +1,16 @@
+{
+  "SEA_GLASS.XIAO_TU_CHARACTER_XIAO_TU_CHARACTER.title": "XiaoTu Glass",
+  "XIAO_TU_RELIC_RUSTY_MEMORIAL_DICE.title": "Rusty Memorial Die",
+  "XIAO_TU_RELIC_RUSTY_MEMORIAL_DICE.description": "At the start of combat, gain 1 die. Reroll all dice at the start of each turn. Your gold can go negative (down to -1000); each gold below 0 increases attack damage you take by 0.5%.",
+  "XIAO_TU_RELIC_RUSTY_MEMORIAL_DICE.flavor": "They put it in her hand at the funeral. The rust tastes of sea water.",
+  "XIAO_TU_RELIC_LEGENDARY_DIE.title": "Legendary Die",
+  "XIAO_TU_RELIC_LEGENDARY_DIE.description": "At the start of combat, gain 1 additional die (2 total).",
+  "XIAO_TU_RELIC_SHOP_DIE.title": "Merchant's Die",
+  "XIAO_TU_RELIC_SHOP_DIE.description": "At the start of combat, gain 1 additional die.",
+  "XIAO_TU_RELIC_SLOT_MACHINE.title": "Slot Machine",
+  "XIAO_TU_RELIC_SLOT_MACHINE.description": "Every 7 dice rerolls, draw 1 card. (Counter persists between combats.)",
+  "XIAO_TU_RELIC_MEMBERSHIP_CARD.title": "Membership Card",
+  "XIAO_TU_RELIC_MEMBERSHIP_CARD.description": "Every 5 times you gain a die, gain 1 Energy. (Counter persists between combats.)",
+  "XIAO_TU_RELIC_TAINTED_CHURCH_COIN.title": "Tainted Church Coin",
+  "XIAO_TU_RELIC_TAINTED_CHURCH_COIN.description": "Upon pickup, gain 500 gold and add a Debt to your deck."
+}
