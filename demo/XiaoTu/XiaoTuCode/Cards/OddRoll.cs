@@ -15,7 +15,7 @@ public sealed class OddRoll() : XiaoTuCard(1, CardType.Skill, CardRarity.Common,
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
         await Block(play, DynamicVars.Block.BaseValue);
-        Dice.RerollWhere(v => v % 2 != 0);
+        Dice.RerollWhere(v => Dice.IsOdd(v));
     }
 
     protected override void OnUpgrade()

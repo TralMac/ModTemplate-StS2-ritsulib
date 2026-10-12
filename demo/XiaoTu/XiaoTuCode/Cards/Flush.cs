@@ -15,7 +15,7 @@ public sealed class Flush() : XiaoTuCard(2, CardType.Attack, CardRarity.Rare, Ta
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
         await Hit(ctx, play, DynamicVars.Damage.BaseValue);
-        if (Dice.Count > 0 && (Dice.EvenCount == 0 || Dice.OddCount == 0)) await Draw(ctx, Dice.Count);
+        if (Dice.AllSameParity) await Draw(ctx, Dice.Count);
     }
 
     protected override void OnUpgrade()

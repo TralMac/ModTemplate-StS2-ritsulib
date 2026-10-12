@@ -14,7 +14,7 @@ public sealed class MakeItEven() : XiaoTuCard(1, CardType.Skill, CardRarity.Comm
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
-        Dice.Shift(1, v => v % 2 != 0);
+        Dice.Shift(1, v => Dice.IsOdd(v));
         await Draw(ctx, DynamicVars["Cards"].IntValue);
     }
 

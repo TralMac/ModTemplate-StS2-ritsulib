@@ -4,7 +4,7 @@ namespace XiaoTu.XiaoTuCode.Dice;
 
 /// <summary>
 /// Implemented by powers and relics that react to dice events. Events are collected by <see cref="DiceState"/> and
-/// dispatched by the starter relic after each card play and at turn start.
+/// dispatched by <see cref="DiceDispatcher"/> after each card play, at turn start and after dice-related damage.
 /// </summary>
 public interface IDiceListener
 {
@@ -16,4 +16,10 @@ public interface IDiceListener
 
     /// <summary>Gold lost to card effects.</summary>
     Task OnGoldLost(PlayerChoiceContext ctx, int amount) => Task.CompletedTask;
+
+    /// <summary>Bet-high (押大) outcomes, in order.</summary>
+    Task OnBets(PlayerChoiceContext ctx, IReadOnlyList<bool> results) => Task.CompletedTask;
+
+    /// <summary>Dice pledged (质押).</summary>
+    Task OnPledged(PlayerChoiceContext ctx, int count) => Task.CompletedTask;
 }

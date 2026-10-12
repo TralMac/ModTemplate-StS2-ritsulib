@@ -6,6 +6,10 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Rewards;
+using XiaoTu.XiaoTuCode.Potions;
 using MegaCrit.Sts2.Core.Rooms;
 using XiaoTu.XiaoTuCode.Powers;
 using System.Reflection;
@@ -37,15 +41,20 @@ public sealed class RustyMemorialDice : XiaoTuRelic
         if (player != Owner) return Task.CompletedTask;
 
         var dice = DiceState.Of(player);
-        dice.RemoveTemporary();
-        dice.TickPledges();
-        dice.RerollAll(counts: false);
+        dice.BeginTurn();
         MainFile.Logger.Info($"[dice] turn start: {dice.Describe()} gold={player.Gold}");
         return DebugGrantCards(choiceContext);
     }
 
     public override Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player) =>
         player == Owner ? Dispatch(choiceContext) : Task.CompletedTask;
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner != Owner) return;
+        MainFile.Logger.Info($"[dice] after {cardPlay.Card.GetType().Name}: {DiceState.Of(Owner).Describe()} gold={Owner.Gold}");
+        await Dispatch(choiceContext);
+    }
 
     /// <summary>Rebate (返利): refund part of the gold lost to card effects this combat.</summary>
     public override async Task AfterCombatVictory(CombatRoom room)
@@ -54,30 +63,6 @@ public sealed class RustyMemorialDice : XiaoTuRelic
         var lost = DiceState.Of(Owner).GoldLostThisCombat;
         if (rebate == null || lost <= 0) return;
         await PlayerCmd.GainGold(lost * rebate.Amount / 100m, Owner);
-    }
-
-    /// <summary>Hands collected reroll / gain / gold-loss events to every listening power and relic.</summary>
-    private async Task Dispatch(PlayerChoiceContext ctx)
-    {
-        var dice = DiceState.Of(Owner);
-        var rerolls = dice.TakeRerolls();
-        var gains = dice.TakeGains();
-        var lost = dice.TakeGoldLost();
-        if (rerolls + gains + lost == 0) return;
-        var listeners = Owner.Creature.Powers.OfType<IDiceListener>().Concat(Owner.Relics.OfType<IDiceListener>()).ToList();
-        foreach (var l in listeners)
-        {
-            if (rerolls > 0) await l.OnRerolls(ctx, rerolls);
-            if (gains > 0) await l.OnDiceGained(ctx, gains);
-            if (lost > 0) await l.OnGoldLost(ctx, lost);
-        }
-    }
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner != Owner) return;
-        MainFile.Logger.Info($"[dice] after {cardPlay.Card.GetType().Name}: {DiceState.Of(Owner).Describe()} gold={Owner.Gold}");
-        await Dispatch(choiceContext);
     }
 
     /// <summary>
@@ -101,6 +86,21 @@ public sealed class RustyMemorialDice : XiaoTuRelic
             var card = combat.CreateCard(canon, Owner);
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
         }
+    }
+
+    private Task Dispatch(PlayerChoiceContext ctx) => DiceDispatcher.Dispatch(ctx, Owner);
+
+    /// <summary>断舍离 / 崩老头: extra card and gold rewards owed after this combat.</summary>
+    public override Task BeforeCombatRewardOffered(RewardsSet rewards, CombatRoom room)
+    {
+        var dice = DiceState.Of(Owner);
+        for (var i = 0; i < dice.ExtraCardRewards; i++) rewards.Rewards.Add(new CardReward(CardCreationOptions.ForRoom(Owner, room.RoomType), 3, Owner));
+        var gold = rewards.Rewards.OfType<GoldReward>().FirstOrDefault();
+        for (var i = 0; i < dice.ExtraGoldRewards && gold != null; i++) rewards.Rewards.Add(new GoldReward(gold.Amount, Owner));
+        if (dice.ChampagneOwed) rewards.Rewards.Add(new PotionReward(ModelDb.Potion<Champagne>().ToMutable(), Owner));
+        dice.ChampagneOwed = false;
+        dice.ExtraCardRewards = dice.ExtraGoldRewards = 0;
+        return Task.CompletedTask;
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,

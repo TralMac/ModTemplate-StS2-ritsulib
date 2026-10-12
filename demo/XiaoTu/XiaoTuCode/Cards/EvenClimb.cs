@@ -15,7 +15,7 @@ public sealed class EvenClimb() : XiaoTuCard(1, CardType.Attack, CardRarity.Comm
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
         await Hit(ctx, play, DynamicVars.Damage.BaseValue);
-        Dice.RerollWhere(v => v % 2 == 0);
+        Dice.RerollWhere(v => Dice.IsEven(v));
     }
 
     protected override void OnUpgrade()
