@@ -16,6 +16,43 @@ public sealed class DiceState
 
     private readonly List<Die> _dice = [];
 
+    /// <summary>Dice slots for this combat (骰子位); 断舍离 / 弱女子 lower it.</summary>
+    public int Capacity { get; private set; } = MaxDice;
+
+    /// <summary>Rerolls (per die, from cards) since the last <see cref="TakeRerolls"/>.</summary>
+    private int _rerolls;
+
+    private int _gains;
+
+    private int _goldLost;
+
+    /// <summary>Gold lost to card effects this combat (for 返利).</summary>
+    public int GoldLostThisCombat { get; private set; }
+
+    public int TakeRerolls() { var n = _rerolls; _rerolls = 0; return n; }
+
+    public int TakeGains() { var n = _gains; _gains = 0; return n; }
+
+    public int TakeGoldLost() { var n = _goldLost; _goldLost = 0; return n; }
+
+    public void NoteGoldLost(int n)
+    {
+        _goldLost += n;
+        GoldLostThisCombat += n;
+    }
+
+    /// <summary>Removes dice slots; surplus dice are dropped at random, temp dice first.</summary>
+    public void LoseSlots(int n)
+    {
+        Capacity = Math.Max(0, Capacity - n);
+        while (_dice.Count > Capacity)
+        {
+            var temps = _dice.Select((d, i) => (d, i)).Where(x => x.d.Temporary).Select(x => x.i).ToList();
+            var idx = temps.Count > 0 ? temps[Rng.Next(temps.Count)] : Rng.Next(_dice.Count);
+            _dice.RemoveAt(idx);
+        }
+    }
+
     public IReadOnlyList<Die> Dice => _dice;
 
     /// <summary>总骰点：所有骰子点数之和。</summary>
@@ -38,13 +75,18 @@ public sealed class DiceState
     {
         _dice.Clear();
         _pledges.Clear();
+        Capacity = MaxDice;
+        _rerolls = _gains = _goldLost = 0;
+        GoldLostThisCombat = 0;
     }
 
     /// <summary>Adds a die with a random value. Over the cap, a random temp die is replaced, else a random die.</summary>
-    public int Add(bool temporary)
+    public int Add(bool temporary, bool counts = true)
     {
+        if (Capacity == 0) return 0;
+        if (counts) _gains++;
         var die = new Die(Roll(), temporary);
-        if (_dice.Count < MaxDice)
+        if (_dice.Count < Capacity)
         {
             _dice.Add(die);
             return die.Value;
@@ -63,6 +105,7 @@ public sealed class DiceState
         var i = _dice.Select((d, k) => (d, k)).MinBy(x => x.d.Value).k;
         var old = _dice[i].Value;
         _dice[i] = _dice[i] with { Value = Roll() };
+        _rerolls++;
         return _dice[i].Value > old;
     }
 
@@ -72,12 +115,14 @@ public sealed class DiceState
         if (_dice.Count == 0) return 0;
         var i = Rng.Next(_dice.Count);
         _dice[i] = _dice[i] with { Value = Roll() };
+        _rerolls++;
         return _dice[i].Value;
     }
 
-    public void RerollAll()
+    public void RerollAll(bool counts = true)
     {
         for (var i = 0; i < _dice.Count; i++) _dice[i] = _dice[i] with { Value = Roll() };
+        if (counts) _rerolls += _dice.Count;
     }
 
     /// <summary>Rerolls one random die; success when the new value is strictly greater (押大). False when no dice.</summary>
@@ -87,6 +132,7 @@ public sealed class DiceState
         var i = Rng.Next(_dice.Count);
         var old = _dice[i].Value;
         _dice[i] = _dice[i] with { Value = Roll() };
+        _rerolls++;
         return _dice[i].Value > old;
     }
 
@@ -99,6 +145,7 @@ public sealed class DiceState
             if (!pred(_dice[i].Value)) continue;
             _dice[i] = _dice[i] with { Value = Roll() };
             n++;
+            _rerolls++;
         }
         return n;
     }
@@ -126,6 +173,7 @@ public sealed class DiceState
         if (idx.Count == 0) return;
         var i = idx[Rng.Next(idx.Count)];
         _dice[i] = _dice[i] with { Value = Roll() };
+        _rerolls++;
     }
 
     /// <summary>The lowest die becomes equal to the highest (跟风).</summary>
@@ -142,6 +190,7 @@ public sealed class DiceState
         if (_dice.Count == 0) return;
         var i = _dice.Select((d, k) => (d, k)).MinBy(x => x.d.Value).k;
         _dice[i] = _dice[i] with { Value = Roll() };
+        _rerolls++;
     }
 
     /// <summary>Mirrors every die: 1↔6, 2↔5, 3↔4.</summary>
@@ -192,7 +241,7 @@ public sealed class DiceState
         {
             if (--_pledges[i] > 0) continue;
             _pledges.RemoveAt(i);
-            if (_dice.Count >= MaxDice) continue;
+            if (_dice.Count >= Capacity) continue;
             _dice.Add(new Die(Roll(), false));
             returned++;
         }

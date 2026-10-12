@@ -17,7 +17,7 @@ public sealed class MoreStake() : XiaoTuCard(1, CardType.Skill, CardRarity.Rare,
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
         await LoseGold(DynamicVars["Gold"].IntValue);
-        while (Dice.Count < DiceState.MaxDice) Dice.Add(temporary: true);
+        while (Dice.Count < Dice.Capacity) Dice.Add(temporary: true);
         Dice.RerollAll();
     }
 }

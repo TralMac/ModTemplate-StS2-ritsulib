@@ -6,6 +6,8 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Rooms;
+using XiaoTu.XiaoTuCode.Powers;
 using System.Reflection;
 using XiaoTu.XiaoTuCode.Character;
 using XiaoTu.XiaoTuCode.Dice;
@@ -26,7 +28,7 @@ public sealed class RustyMemorialDice : XiaoTuRelic
     {
         var dice = DiceState.Of(Owner);
         dice.Clear();
-        dice.Add(temporary: false);
+        dice.Add(temporary: false, counts: false);
         return Task.CompletedTask;
     }
 
@@ -37,16 +39,45 @@ public sealed class RustyMemorialDice : XiaoTuRelic
         var dice = DiceState.Of(player);
         dice.RemoveTemporary();
         dice.TickPledges();
-        dice.RerollAll();
+        dice.RerollAll(counts: false);
         MainFile.Logger.Info($"[dice] turn start: {dice.Describe()} gold={player.Gold}");
         return DebugGrantCards(choiceContext);
     }
 
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player) =>
+        player == Owner ? Dispatch(choiceContext) : Task.CompletedTask;
+
+    /// <summary>Rebate (返利): refund part of the gold lost to card effects this combat.</summary>
+    public override async Task AfterCombatVictory(CombatRoom room)
     {
-        if (cardPlay.Card.Owner == Owner)
-            MainFile.Logger.Info($"[dice] after {cardPlay.Card.GetType().Name}: {DiceState.Of(Owner).Describe()} gold={Owner.Gold}");
-        return Task.CompletedTask;
+        var rebate = Owner.Creature.GetPower<RebatePower>();
+        var lost = DiceState.Of(Owner).GoldLostThisCombat;
+        if (rebate == null || lost <= 0) return;
+        await PlayerCmd.GainGold(lost * rebate.Amount / 100m, Owner);
+    }
+
+    /// <summary>Hands collected reroll / gain / gold-loss events to every listening power and relic.</summary>
+    private async Task Dispatch(PlayerChoiceContext ctx)
+    {
+        var dice = DiceState.Of(Owner);
+        var rerolls = dice.TakeRerolls();
+        var gains = dice.TakeGains();
+        var lost = dice.TakeGoldLost();
+        if (rerolls + gains + lost == 0) return;
+        var listeners = Owner.Creature.Powers.OfType<IDiceListener>().Concat(Owner.Relics.OfType<IDiceListener>()).ToList();
+        foreach (var l in listeners)
+        {
+            if (rerolls > 0) await l.OnRerolls(ctx, rerolls);
+            if (gains > 0) await l.OnDiceGained(ctx, gains);
+            if (lost > 0) await l.OnGoldLost(ctx, lost);
+        }
+    }
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner != Owner) return;
+        MainFile.Logger.Info($"[dice] after {cardPlay.Card.GetType().Name}: {DiceState.Of(Owner).Describe()} gold={Owner.Gold}");
+        await Dispatch(choiceContext);
     }
 
     /// <summary>
@@ -76,7 +107,9 @@ public sealed class RustyMemorialDice : XiaoTuRelic
         CardModel? cardSource, CardPlay? cardPlay)
     {
         if (target != Owner.Creature || !props.IsPoweredAttack()) return 1m;
-        return GoldOps.DebtMultiplier(Owner);
+        var mult = GoldOps.DebtMultiplier(Owner);
+        if (mult > 1m) MainFile.Logger.Info($"[debt] x{mult} on {amount} damage (gold={Owner.Gold})");
+        return mult;
     }
 }
 

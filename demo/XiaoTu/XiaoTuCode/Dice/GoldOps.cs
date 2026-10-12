@@ -12,7 +12,9 @@ public static class GoldOps
     {
         var before = player.Gold;
         player.Gold = Math.Max(Floor, before - amount);
-        return before - player.Gold;
+        var lost = before - player.Gold;
+        DiceState.Of(player).NoteGoldLost(lost);
+        return lost;
     }
 
     /// <summary>Damage multiplier from debt: +0.5% per gold below 0 (rounded to nearest at use site).</summary>

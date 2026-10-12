@@ -1,11 +1,8 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using XiaoTu.XiaoTuCode.Character;
-using XiaoTu.XiaoTuCode.Dice;
 
 namespace XiaoTu.XiaoTuCode.Cards;
 
@@ -14,7 +11,14 @@ public sealed class RustyDice() : XiaoTuCard(0, CardType.Skill, CardRarity.Basic
 {
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        DiceState.Of(Owner).Add(temporary: false);
+        Dice.Add(temporary: false);
+        if (IsUpgraded) Dice.RerollAll();
+        EnergyCost.AddThisCombat(1);
         await Task.CompletedTask;
+    }
+
+    protected override void OnUpgrade()
+    {
+        //Upgraded version also rerolls all dice (see OnPlay).
     }
 }
