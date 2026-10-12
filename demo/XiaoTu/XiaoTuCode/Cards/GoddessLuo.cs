@@ -20,7 +20,9 @@ public sealed class GoddessLuo() : XiaoTuCard(1, CardType.Skill, CardRarity.Rare
         var limit = IsUpgraded ? 99 : 6;
         for (var i = 0; i < limit; i++)
         {
+            //Each pass is one "play" of the card: reroll the lowest die and let reroll listeners react before the next pass.
             Dice.RerollLowest();
+            await DiceDispatcher.Dispatch(ctx, Owner);
             if (Dice.Lowest >= 6 || Dice.Count == 0) break;
         }
         await Task.CompletedTask;

@@ -9,7 +9,7 @@ namespace XiaoTu.XiaoTuCode.Relics;
 
 public sealed class LegendaryDie : XiaoTuRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Ancient;
+    public override RelicRarity Rarity => RelicRarity.Rare;
 
     public override Task BeforeCombatStartLate()
     {

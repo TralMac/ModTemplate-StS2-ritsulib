@@ -20,6 +20,6 @@ public sealed class Gilding() : XiaoTuCard(1, CardType.Power, CardRarity.Rare, T
 
     protected override void OnUpgrade()
     {
-        //Innate on upgrade is not implemented yet.
+        AddKeyword(CardKeyword.Innate);
     }
 }

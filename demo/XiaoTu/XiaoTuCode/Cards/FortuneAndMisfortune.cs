@@ -18,6 +18,6 @@ public sealed class FortuneAndMisfortune() : XiaoTuCard(1, CardType.Power, CardR
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        AddKeyword(CardKeyword.Innate);
     }
 }
